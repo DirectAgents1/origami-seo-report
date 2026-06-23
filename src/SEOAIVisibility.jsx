@@ -290,7 +290,7 @@ export default function SEOAIVisibility() {
           sub={m.wow != null ? `${m.wow >= 0 ? '+' : ''}${m.wow.toFixed(1)} pts vs prior week` : 'most recent week'}
           accent={m.wow != null && m.wow < 0 ? RED : GREEN}
         />
-        <KPICard label="Prompts Monitored" value={m.prompts.toLocaleString()} sub={`${m.platforms.length} AI platforms tracked`} />
+        <KPICard label="Prompts Monitored" value={`${m.platforms.length} AI platforms`} sub="prompts tracked across AI engines" />
         <KPICard label="Topics Monitored" value={m.topics.length} sub="prompt themes tracked" />
         <KPICard label="Responses Analyzed" value={m.totalResponses.toLocaleString()} sub="AI answers sampled in window" />
         <KPICard
@@ -420,7 +420,7 @@ export default function SEOAIVisibility() {
               onClick={() => setShowAllPrompts(v => !v)}
               style={{ background: 'none', border: 'none', color: BRAND, fontSize: 11, fontWeight: 600, cursor: 'pointer', padding: '6px 0 0' }}
             >
-              {showAllPrompts ? '▲ Show top 10 prompts' : `▼ Show all ${m.promptRows.length} prompts`}
+              {showAllPrompts ? '▲ Show top 10 prompts' : '▼ Show all prompts'}
             </button>
           )}
           <p style={{ fontSize: 10, color: '#a0aec0', marginTop: 10, lineHeight: 1.4 }}>
