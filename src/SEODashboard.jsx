@@ -61,7 +61,7 @@ export default function SEODashboard({ user, onLogout, onSwitchDashboard }) {
         </div>
         <div className="topbar-right" style={{ color: '#0B1F3A', display: 'flex', alignItems: 'center', gap: 14 }}>
           <span>Welcome, {user.name}</span>
-          <a href="/__logout" style={{ color: '#1A7FE0', fontSize: 12, fontWeight: 600, textDecoration: 'none' }}>Sign out</a>
+          <a href="/__logout" onClick={() => { try { localStorage.removeItem('gotrue.user') } catch (e) {} }} style={{ color: '#1A7FE0', fontSize: 12, fontWeight: 600, textDecoration: 'none' }}>Sign out</a>
         </div>
       </header>
 
