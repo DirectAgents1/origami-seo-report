@@ -54,7 +54,7 @@ export default function SEODashboard({ user, onLogout, onSwitchDashboard }) {
       <header className="topbar" style={{ background: '#fff', color: '#0B1F3A', borderBottom: '2px solid #1A7FE0' }}>
         <div className="topbar-left" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <img src="/origami-logo.svg" alt="Origami Risk" style={{ height: 34, width: 'auto', display: 'block' }} />
-          <h2 style={{ color: '#0B1F3A', margin: 0 }}>SEO &amp; AI Visibility Report</h2>
+          <h2 style={{ color: '#0B1F3A', margin: 0 }}>Origami Command Center</h2>
           <span style={{ color: '#1A7FE0', fontSize: 11, marginLeft: 4 }}>
             origamirisk.com · Google Search Console + GA4 + Scrunch (AI)
           </span>
