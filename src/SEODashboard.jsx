@@ -60,6 +60,11 @@ export default function SEODashboard({ user, onLogout, onSwitchDashboard }) {
           </span>
         </div>
         <div className="topbar-right" style={{ color: '#0B1F3A', display: 'flex', alignItems: 'center', gap: 14 }}>
+          {/* Report switcher: Media (sister report, opens new tab) | SEO (current) */}
+          <div style={{ display: 'inline-flex', background: '#eaf3fd', border: '1px solid #cfe2fb', borderRadius: 999, padding: 3, fontSize: 11, fontWeight: 700 }}>
+            <a href="https://origami-media.directagents.com/" target="_blank" rel="noopener noreferrer" title="Open the Media performance report in a new tab" style={{ padding: '4px 13px', borderRadius: 999, color: '#1A7FE0', textDecoration: 'none' }}>Media</a>
+            <span style={{ padding: '4px 13px', borderRadius: 999, background: '#1A7FE0', color: '#fff' }}>SEO</span>
+          </div>
           <span>Welcome, {user.name}</span>
           <a href="/__logout" onClick={() => { try { localStorage.removeItem('gotrue.user') } catch (e) {} }} style={{ color: '#1A7FE0', fontSize: 12, fontWeight: 600, textDecoration: 'none' }}>Sign out</a>
         </div>
