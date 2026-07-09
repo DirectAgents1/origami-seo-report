@@ -10,5 +10,25 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <!-- Session keep-alive: refresh this site's own Identity token every 20 min and
+         rewrite the isolated host-only cookie ori_seo_jwt, so an open dashboard is
+         not logged out mid-use. gotrue-js loaded at runtime (Vite leaves it alone). -->
+    <script type="module">
+      (async () => {
+        const run = (GoTrue) => {
+          try {
+            const a = new GoTrue({ APIUrl: '/.netlify/identity', setCookie: false });
+            const u = a.currentUser();
+            if (u) u.jwt().then((tok) => { if (tok) document.cookie = 'ori_seo_jwt=' + tok + '; Path=/; Secure; SameSite=Lax; Max-Age=3600'; }).catch(() => {});
+          } catch (e) {}
+        };
+        try {
+          const M = await import('https://cdn.jsdelivr.net/npm/gotrue-js@0.9.29/+esm');
+          const GoTrue = M.default || M;
+          run(GoTrue);
+          setInterval(() => run(GoTrue), 20 * 60 * 1000);
+        } catch (e) {}
+      })();
+    </script>
   </body>
 </html>

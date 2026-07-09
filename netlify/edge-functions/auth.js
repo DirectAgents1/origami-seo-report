@@ -14,15 +14,13 @@
 //   IDENTITY_JWT_SECRET (optional) — verify HS256 locally, no network call
 //   DA_REFRESH_KEY      (optional) — server-to-server cron refresh bypass
 
-const COOKIE_NAME = 'nf_jwt';
+// Independent auth: validate against THIS site's own Netlify Identity (same
+// origin) and read THIS site's own host-only cookie. No cross-domain SSO with the
+// Media report (that caused the "Failed to fetch" and coupled the two sites).
+const COOKIE_NAME = 'ori_seo_jwt';
 const LOGIN_PATH = '/login';
 const LOGIN_FILE = '/login.html';
 const LOGOUT_ACTION = '/__logout';
-
-// Shared login with the Media report: this site trusts tokens issued by the
-// Media report's Netlify Identity so one login covers both. The nf_jwt cookie is
-// shared across *.directagents.com; we validate it against the Media Identity.
-const IDENTITY_HOST = 'https://origami-media.directagents.com';
 
 const PUBLIC_PREFIXES = [
   '/login',
@@ -99,12 +97,11 @@ async function verifyHs256(token, secret) {
   } catch { return false; }
 }
 
-async function verifyViaIdentity(token) {
+async function verifyViaIdentity(token, origin) {
   try {
-    // Validate against the Media report's Identity (shared login). Server-side
-    // fetch, so cross-origin is fine (no CORS). No fallback to this site's own
-    // Identity — tokens are minted by the Media Identity only.
-    const resp = await fetch(IDENTITY_HOST + '/.netlify/identity/user', {
+    // Validate against THIS site's own Identity (same origin). Server-side fetch,
+    // so no CORS concern; tokens are minted by this site's own Identity.
+    const resp = await fetch(origin + '/.netlify/identity/user', {
       headers: { Authorization: 'Bearer ' + token },
     });
     return resp.ok;
@@ -113,9 +110,7 @@ async function verifyViaIdentity(token) {
 
 async function isAuthenticated(token, origin) {
   if (!token || !looksLiveJwt(token)) return false;
-  // Always validate against the shared Media Identity (ignore any local secret,
-  // which would be this site's own and reject Media-issued tokens).
-  return verifyViaIdentity(token);
+  return verifyViaIdentity(token, origin);
 }
 
 function isDocumentRequest(request) {

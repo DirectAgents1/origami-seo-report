@@ -138,15 +138,16 @@ function goTo(n) {
 slides[0].classList.add('active');
 timer = setInterval(() => goTo(cur + 1), 5000);
 
-// SHARED LOGIN: authenticate against the Media report's Identity so one account
-// works on both reports (the edge gate validates against the same Media Identity).
-// setCookie:false + manual setSharedCookie writes nf_jwt at Domain=directagents.com,
-// shared across *.directagents.com.
-const auth = new GoTrue({ APIUrl: 'https://origami-media.directagents.com/.netlify/identity', setCookie: false });
+// INDEPENDENT LOGIN: authenticate against THIS site's own Identity (same origin),
+// and store the session in this site's OWN host-only cookie `ori_seo_jwt`. No
+// cross-domain call (that was the "Failed to fetch"), no shared Domain=directagents.com
+// cookie — so origami-seo works on its own and never collides with origami-media
+// or any other DA dashboard. (Function name kept so call sites are unchanged.)
+const auth = new GoTrue({ APIUrl: '/.netlify/identity', setCookie: false });
 
 function setSharedCookie(token) {
-  document.cookie = 'nf_jwt=' + token.access_token +
-    '; Domain=directagents.com; Path=/; Secure; SameSite=Lax; Max-Age=' + (token.expires_in || 3600);
+  document.cookie = 'ori_seo_jwt=' + token.access_token +
+    '; Path=/; Secure; SameSite=Lax; Max-Age=' + (token.expires_in || 3600);
 }
 function showSec(name) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('on'));
