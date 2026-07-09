@@ -19,6 +19,11 @@ const LOGIN_PATH = '/login';
 const LOGIN_FILE = '/login.html';
 const LOGOUT_ACTION = '/__logout';
 
+// Shared login with the Media report: this site trusts tokens issued by the
+// Media report's Netlify Identity so one login covers both. The nf_jwt cookie is
+// shared across *.directagents.com; we validate it against the Media Identity.
+const IDENTITY_HOST = 'https://origami-media.directagents.com';
+
 const PUBLIC_PREFIXES = [
   '/login',
   '/.netlify/identity',
@@ -94,9 +99,12 @@ async function verifyHs256(token, secret) {
   } catch { return false; }
 }
 
-async function verifyViaIdentity(token, origin) {
+async function verifyViaIdentity(token) {
   try {
-    const resp = await fetch(origin + '/.netlify/identity/user', {
+    // Validate against the Media report's Identity (shared login). Server-side
+    // fetch, so cross-origin is fine (no CORS). No fallback to this site's own
+    // Identity — tokens are minted by the Media Identity only.
+    const resp = await fetch(IDENTITY_HOST + '/.netlify/identity/user', {
       headers: { Authorization: 'Bearer ' + token },
     });
     return resp.ok;
@@ -105,9 +113,9 @@ async function verifyViaIdentity(token, origin) {
 
 async function isAuthenticated(token, origin) {
   if (!token || !looksLiveJwt(token)) return false;
-  const localSecret = Deno.env.get('IDENTITY_JWT_SECRET');
-  if (localSecret) return verifyHs256(token, localSecret);
-  return verifyViaIdentity(token, origin);
+  // Always validate against the shared Media Identity (ignore any local secret,
+  // which would be this site's own and reject Media-issued tokens).
+  return verifyViaIdentity(token);
 }
 
 function isDocumentRequest(request) {

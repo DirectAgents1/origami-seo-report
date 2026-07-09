@@ -138,10 +138,11 @@ function goTo(n) {
 slides[0].classList.add('active');
 timer = setInterval(() => goTo(cur + 1), 5000);
 
-// STANDALONE site: Identity (GoTrue) lives on THIS same origin. Authenticate
-// against this site's own /.netlify/identity. setCookie:false + manual
-// setSharedCookie so the edge gate's nf_jwt cookie is written explicitly.
-const auth = new GoTrue({ APIUrl: '/.netlify/identity', setCookie: false });
+// SHARED LOGIN: authenticate against the Media report's Identity so one account
+// works on both reports (the edge gate validates against the same Media Identity).
+// setCookie:false + manual setSharedCookie writes nf_jwt at Domain=directagents.com,
+// shared across *.directagents.com.
+const auth = new GoTrue({ APIUrl: 'https://origami-media.directagents.com/.netlify/identity', setCookie: false });
 
 function setSharedCookie(token) {
   document.cookie = 'nf_jwt=' + token.access_token +
