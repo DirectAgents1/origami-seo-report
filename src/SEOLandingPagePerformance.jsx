@@ -217,7 +217,7 @@ function ExportButton({ onClick }) {
       onClick={onClick}
       style={{ fontSize: 10, padding: '4px 10px', borderRadius: 4, border: '1px solid #cbd5e0', background: '#fff', color: '#1a3a5c', cursor: 'pointer', fontWeight: 600 }}
       title="Export this table as CSV"
-    >📥 CSV</button>
+    >CSV</button>
   )
 }
 
@@ -552,7 +552,7 @@ export default function SEOLandingPagePerformance() {
   return (
     <div>
       <div style={{ marginBottom: 8 }}>
-        <div style={{ fontSize: 16, fontWeight: 700, color: '#1a3a5c' }}>📄 Landing Page Performance · {monthLabel(focusYm)}</div>
+        <div style={{ fontSize: 16, fontWeight: 700, color: '#1a3a5c' }}>Landing Page Performance · {monthLabel(focusYm)}</div>
         <div style={{ fontSize: 10, color: '#718096' }}>Source: GA4 <code>account 328179682</code> · Organic Search (<code>session_default_channel_group = 'Organic Search'</code>) · Conversions = GA4 key events · Path levels parsed from <code>landing_page_plus_query_string</code></div>
       </div>
 
@@ -654,7 +654,7 @@ export default function SEOLandingPagePerformance() {
       <div style={{ background: 'var(--card-bg)', borderRadius: 8, border: '1px solid var(--border)', boxShadow: 'var(--shadow)', padding: 14, marginBottom: 16 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6, flexWrap: 'wrap', gap: 8 }}>
           <div>
-            <div style={{ fontSize: 12, fontWeight: 700 }}>🎯 15-Month Conversions + Sessions</div>
+            <div style={{ fontSize: 12, fontWeight: 700 }}>15-Month Conversions + Sessions</div>
             <div style={{ fontSize: 9, color: '#718096' }}>{monthLabel(lastNMonths(focusYm, 15)[0])} → {monthLabel(focusYm)} · bar = conversions (left axis), line = sessions (right axis)</div>
           </div>
           <ExportButton onClick={exportTopChart} />
@@ -681,7 +681,7 @@ export default function SEOLandingPagePerformance() {
       <div style={{ background: 'var(--card-bg)', borderRadius: 8, border: '1px solid var(--border)', boxShadow: 'var(--shadow)', padding: 14 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8, flexWrap: 'wrap', gap: 8 }}>
           <div>
-            <div style={{ fontSize: 12, fontWeight: 700 }}>📋 Landing Page Drill-Down · {rangeStart === rangeEnd ? monthLabel(rangeStart) : `${monthLabel(rangeStart)} → ${monthLabel(rangeEnd)}`} (vs prev period & YoY)</div>
+            <div style={{ fontSize: 12, fontWeight: 700 }}>Landing Page Drill-Down · {rangeStart === rangeEnd ? monthLabel(rangeStart) : `${monthLabel(rangeStart)} → ${monthLabel(rangeEnd)}`} (vs prev period & YoY)</div>
             <div style={{ fontSize: 9, color: '#718096' }}>Click ▸ to expand: Page Path L1 → L2 → individual landing page · sorted by sessions · prev = preceding {compareBounds.months.length}-month window, YoY = same window 12 months ago</div>
           </div>
           <ExportButton onClick={exportDrill} />

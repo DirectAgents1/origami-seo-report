@@ -11,7 +11,7 @@ function ExportButton({ onClick }) {
       onClick={onClick}
       style={{ fontSize: 10, padding: '4px 10px', borderRadius: 4, border: '1px solid #cbd5e0', background: '#fff', color: '#1a3a5c', cursor: 'pointer', fontWeight: 600 }}
       title="Export this table as CSV"
-    >📥 CSV</button>
+    >CSV</button>
   )
 }
 
@@ -501,7 +501,7 @@ export default function SEOKeywordsPerformance() {
   return (
     <div>
       <div style={{ marginBottom: 8 }}>
-        <div style={{ fontSize: 16, fontWeight: 700, color: '#1a3a5c' }}>🔑 Keywords Performance · {monthLabel(focusYm)}</div>
+        <div style={{ fontSize: 16, fontWeight: 700, color: '#1a3a5c' }}>Keywords Performance · {monthLabel(focusYm)}</div>
         <div style={{ fontSize: 10, color: '#718096' }}>Source: GSC keyword-level (<code>google_search_console_query_by_month</code>) · Brand = query contains "origami risk" or "origami"</div>
       </div>
 
@@ -568,7 +568,7 @@ export default function SEOKeywordsPerformance() {
       <div style={{ background: 'var(--card-bg)', borderRadius: 8, border: '1px solid var(--border)', boxShadow: 'var(--shadow)', padding: 14, marginBottom: 16 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 8, flexWrap: 'wrap', gap: 10 }}>
           <div>
-            <div style={{ fontSize: 12, fontWeight: 700 }}>📈 15-Month Trend · Bar = Clicks {barView === 'mom' ? 'MoM %' : 'YoY %'} · Line = {lineDef.label}</div>
+            <div style={{ fontSize: 12, fontWeight: 700 }}>15-Month Trend · Bar = Clicks {barView === 'mom' ? 'MoM %' : 'YoY %'} · Line = {lineDef.label}</div>
             <div style={{ fontSize: 9, color: '#718096' }}>{monthLabel(lastNMonths(focusYm, 15)[0])} → {monthLabel(focusYm)} · aggregated across all keywords</div>
           </div>
           <div style={{ display: 'flex', gap: 12, alignItems: 'flex-end', flexWrap: 'wrap' }}>
@@ -623,7 +623,7 @@ export default function SEOKeywordsPerformance() {
         {/* Scatter */}
         <div style={{ background: 'var(--card-bg)', borderRadius: 8, border: '1px solid var(--border)', boxShadow: 'var(--shadow)', padding: 14 }}>
           <div style={{ marginBottom: 6 }}>
-            <div style={{ fontSize: 12, fontWeight: 700 }}>🎯 Top 10 Non-Brand Keywords · {scatterRows.ym ? monthLabel(scatterRows.ym) : '—'}</div>
+            <div style={{ fontSize: 12, fontWeight: 700 }}>Top 10 Non-Brand Keywords · {scatterRows.ym ? monthLabel(scatterRows.ym) : '—'}</div>
             <div style={{ fontSize: 9, color: '#718096' }}>X = avg position (big → small) · Y = clicks · bubble size = CTR · upper-right (large + low position) is best</div>
           </div>
           <ResponsiveContainer width="100%" height={360}>
@@ -663,7 +663,7 @@ export default function SEOKeywordsPerformance() {
                 strokeWidth={1.5}
                 strokeDasharray="5 3"
                 ifOverflow="extendDomain"
-                label={{ value: '✨ Best zone', position: 'insideTopRight', fontSize: 11, fill: '#1f5938', fontWeight: 800, offset: 6 }}
+                label={{ value: 'Best zone', position: 'insideTopRight', fontSize: 11, fill: '#1f5938', fontWeight: 800, offset: 6 }}
               />
               <Tooltip
                 cursor={{ strokeDasharray: '3 3' }}
@@ -693,7 +693,7 @@ export default function SEOKeywordsPerformance() {
         <div style={{ background: 'var(--card-bg)', borderRadius: 8, border: '1px solid var(--border)', boxShadow: 'var(--shadow)', padding: 14 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6, flexWrap: 'wrap', gap: 8 }}>
             <div>
-              <div style={{ fontSize: 12, fontWeight: 700 }}>🪜 Monthly Keyword Count by Position</div>
+              <div style={{ fontSize: 12, fontWeight: 700 }}>Monthly Keyword Count by Position</div>
               <div style={{ fontSize: 9, color: '#718096' }}>{monthLabel(lastNMonths(focusYm, 15)[0])} → {monthLabel(focusYm)} · click toggle to filter Brand vs Non-Brand</div>
             </div>
             <div style={{ display: 'flex', gap: 3 }}>
@@ -738,7 +738,7 @@ export default function SEOKeywordsPerformance() {
       <div style={{ background: 'var(--card-bg)', borderRadius: 8, border: '1px solid var(--border)', boxShadow: 'var(--shadow)', padding: 14, marginBottom: 16 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8, flexWrap: 'wrap', gap: 8 }}>
           <div>
-            <div style={{ fontSize: 12, fontWeight: 700 }}>📋 15-Month Position Overview</div>
+            <div style={{ fontSize: 12, fontWeight: 700 }}>15-Month Position Overview</div>
             <div style={{ fontSize: 9, color: '#718096' }}>{monthLabel(lastNMonths(focusYm, 15)[0])} → {monthLabel(focusYm)} · unique keyword count in each position bucket · newest month first</div>
           </div>
           <ExportButton onClick={() => {
@@ -848,7 +848,7 @@ function BrandVsNbTable({ rows, ym, expanded, setExpanded, onExport }) {
     <div style={{ background: 'var(--card-bg)', borderRadius: 8, border: '1px solid var(--border)', boxShadow: 'var(--shadow)', padding: 14, marginBottom: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8, flexWrap: 'wrap', gap: 8 }}>
         <div>
-          <div style={{ fontSize: 12, fontWeight: 700 }}>📊 Brand vs Non-Brand Keywords · {monthLabel(ym)} (MoM &amp; YoY)</div>
+          <div style={{ fontSize: 12, fontWeight: 700 }}>Brand vs Non-Brand Keywords · {monthLabel(ym)} (MoM &amp; YoY)</div>
           <div style={{ fontSize: 9, color: '#718096' }}>Drill-down shows the top 1,000 keywords by clicks per month; the "total" count next to each segment is the uncapped unique keyword count from the rank-bucket rollup.</div>
         </div>
         {onExport && <ExportButton onClick={onExport} />}
@@ -901,7 +901,7 @@ function SearchIntentTable({ rows, ym, expanded, setExpanded, onExport }) {
     <div style={{ background: 'var(--card-bg)', borderRadius: 8, border: '1px solid var(--border)', boxShadow: 'var(--shadow)', padding: 14 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8, flexWrap: 'wrap', gap: 8 }}>
         <div>
-          <div style={{ fontSize: 12, fontWeight: 700 }}>🎯 Search Intent Drill-Down · {monthLabel(ym)} (MoM &amp; YoY)</div>
+          <div style={{ fontSize: 12, fontWeight: 700 }}>Search Intent Drill-Down · {monthLabel(ym)} (MoM &amp; YoY)</div>
           <div style={{ fontSize: 9, color: '#718096' }}>B2B SEO funnel framework: Navigational (brand/competitor) · Transactional (demo/pricing/trial) · Commercial (best/vs/software/vendors) · Informational (how/what/guide/compliance) · Generic (head terms)</div>
         </div>
         {onExport && <ExportButton onClick={onExport} />}

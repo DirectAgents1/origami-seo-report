@@ -12,7 +12,7 @@ function ExportButton({ onClick }) {
       onClick={onClick}
       style={{ fontSize: 10, padding: '4px 10px', borderRadius: 4, border: '1px solid #cbd5e0', background: '#fff', color: '#1a3a5c', cursor: 'pointer', fontWeight: 600 }}
       title="Export this table as CSV"
-    >📥 CSV</button>
+    >CSV</button>
   )
 }
 
@@ -455,7 +455,7 @@ export default function SEOExecutivePerformance() {
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 8 }}>
         <div>
-          <div style={{ fontSize: 16, fontWeight: 700, color: '#1a3a5c' }}>📊 Executive Performance · {monthLabel(focusYm)}</div>
+          <div style={{ fontSize: 16, fontWeight: 700, color: '#1a3a5c' }}>Executive Performance · {monthLabel(focusYm)}</div>
           <div style={{ fontSize: 10, color: '#718096' }}>
             Sources: GSC <code>sc-domain:origamirisk.com</code> + GA4 <code>account 328179682</code> (Organic Search · <code>session_default_channel_group = 'Organic Search'</code>) · MoM vs {monthLabel(prevMonth(focusYm))} · YoY vs {monthLabel(yoyMonth(focusYm))}
           </div>
@@ -467,7 +467,7 @@ export default function SEOExecutivePerformance() {
         if (!ga4Range) {
           return (
             <div style={{ marginBottom: 12, padding: '8px 12px', background: '#fef5e7', border: '1px solid #f6e05e', borderRadius: 6, fontSize: 11, color: '#744210' }}>
-              <strong>⚠️ GA4 data unavailable</strong> — Conversions and Engaged Sessions cards will populate once the GA4 source backfills. All other KPIs are live.
+              <strong>GA4 data unavailable</strong> — Conversions and Engaged Sessions cards will populate once the GA4 source backfills. All other KPIs are live.
             </div>
           )
         }
@@ -481,7 +481,7 @@ export default function SEOExecutivePerformance() {
         return (
           <div style={{ marginBottom: 12, padding: '8px 12px', background: '#fef5e7', border: '1px solid #f6e05e', borderRadius: 6, fontSize: 11, color: '#744210', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
             <div>
-              <strong>⏳ GA4 backfill in progress</strong> — only {ga4Range.days} day{ga4Range.days === 1 ? '' : 's'} of GA4 data available so far ({ga4Range.first} → {ga4Range.last}).
+              <strong>GA4 backfill in progress</strong> — only {ga4Range.days} day{ga4Range.days === 1 ? '' : 's'} of GA4 data available so far ({ga4Range.first} → {ga4Range.last}).
               {partialFocus && <> Focus month <strong>{monthLabel(focusYm)}</strong> has {focusDays} of {focusExpected} days; MoM/YoY for GA4 KPIs will be unreliable until more history loads.</>}
             </div>
             <span style={{ fontSize: 9, padding: '2px 6px', borderRadius: 3, background: '#fed7aa', color: '#7b341e', fontWeight: 700 }}>GSC: full history</span>
@@ -555,7 +555,7 @@ export default function SEOExecutivePerformance() {
           <div style={{ background: 'var(--card-bg)', borderRadius: 8, border: '1px solid var(--border)', boxShadow: 'var(--shadow)', padding: 14, marginBottom: 16 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 8, flexWrap: 'wrap', gap: 10 }}>
               <div>
-                <div style={{ fontSize: 12, fontWeight: 700 }}>📈 Trend · {barAvailable ? barDef.label : '—'} <span style={{ color: '#718096', fontWeight: 400 }}>vs</span> {lineAvailable ? lineDef.label : '—'}</div>
+                <div style={{ fontSize: 12, fontWeight: 700 }}>Trend · {barAvailable ? barDef.label : '—'} <span style={{ color: '#718096', fontWeight: 400 }}>vs</span> {lineAvailable ? lineDef.label : '—'}</div>
                 <div style={{ fontSize: 9, color: '#718096' }}>Last 15 months · {chartGran} view · bar = volume (left axis), line = rate (right axis)</div>
               </div>
               <div style={{ display: 'flex', gap: 12, alignItems: 'flex-end', flexWrap: 'wrap' }}>
@@ -681,7 +681,7 @@ export default function SEOExecutivePerformance() {
           <div style={{ background: 'var(--card-bg)', borderRadius: 8, border: '1px solid var(--border)', boxShadow: 'var(--shadow)', padding: 14 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8, flexWrap: 'wrap', gap: 8 }}>
               <div>
-                <div style={{ fontSize: 12, fontWeight: 700 }}>📋 15-Month Keyword Trending by Position</div>
+                <div style={{ fontSize: 12, fontWeight: 700 }}>15-Month Keyword Trending by Position</div>
                 <div style={{ fontSize: 9, color: '#718096' }}>Click a year-month to drill into rank buckets · MoM &amp; YoY shown for every metric</div>
               </div>
               <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
@@ -814,7 +814,7 @@ export default function SEOExecutivePerformance() {
           <div style={{ marginTop: 16, background: 'var(--card-bg)', borderRadius: 8, border: '1px solid var(--border)', boxShadow: 'var(--shadow)', padding: 14 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8, flexWrap: 'wrap', gap: 8 }}>
               <div>
-                <div style={{ fontSize: 12, fontWeight: 700 }}>📊 15-Month GA4 Trending (Organic Search)</div>
+                <div style={{ fontSize: 12, fontWeight: 700 }}>15-Month GA4 Trending (Organic Search)</div>
                 <div style={{ fontSize: 9, color: '#718096' }}>MoM &amp; YoY shown for every metric · partial months marked with day count</div>
               </div>
               <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
