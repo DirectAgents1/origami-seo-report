@@ -14,10 +14,17 @@
 //   IDENTITY_JWT_SECRET (optional) — verify HS256 locally, no network call
 //   DA_REFRESH_KEY      (optional) — server-to-server cron refresh bypass
 
-// Independent auth: validate against THIS site's own Netlify Identity (same
-// origin) and read THIS site's own host-only cookie. No cross-domain SSO with the
-// Media report (that caused the "Failed to fetch" and coupled the two sites).
+// Auth accepts EITHER of two sessions:
+//   1. Shared cross-report SSO cookie `ori_sso_jwt` (scoped Domain=directagents.com),
+//      minted by the Media report's Identity and validated against it server-side.
+//      Lets a user who logged into the Media report open this SEO report without a
+//      second login. This is a server-to-server fetch (no browser CORS), so it does
+//      NOT reintroduce the old client-side "Failed to fetch".
+//   2. This site's own standalone host-only cookie `ori_seo_jwt`, validated against
+//      this site's own Identity (unchanged — the SEO login page still works alone).
 const COOKIE_NAME = 'ori_seo_jwt';
+const SHARED_COOKIE = 'ori_sso_jwt';
+const MEDIA_IDENTITY = 'https://origami-media.directagents.com';
 const LOGIN_PATH = '/login';
 const LOGIN_FILE = '/login.html';
 const LOGOUT_ACTION = '/__logout';
@@ -97,20 +104,26 @@ async function verifyHs256(token, secret) {
   } catch { return false; }
 }
 
-async function verifyViaIdentity(token, origin) {
+async function verifyViaHost(token, host) {
   try {
-    // Validate against THIS site's own Identity (same origin). Server-side fetch,
-    // so no CORS concern; tokens are minted by this site's own Identity.
-    const resp = await fetch(origin + '/.netlify/identity/user', {
+    // Server-side fetch (no browser CORS). `host` is either this site's own origin
+    // or the Media report's origin for the shared SSO cookie.
+    const resp = await fetch(host + '/.netlify/identity/user', {
       headers: { Authorization: 'Bearer ' + token },
     });
     return resp.ok;
   } catch { return false; }
 }
 
-async function isAuthenticated(token, origin) {
-  if (!token || !looksLiveJwt(token)) return false;
-  return verifyViaIdentity(token, origin);
+async function isAuthenticated(request, origin) {
+  const cookie = request.headers.get('cookie');
+  // 1. Shared cross-report session (minted by the Media report's Identity).
+  const shared = readCookie(cookie, SHARED_COOKIE);
+  if (shared && looksLiveJwt(shared) && await verifyViaHost(shared, MEDIA_IDENTITY)) return true;
+  // 2. This site's own standalone session.
+  const own = readCookie(cookie, COOKIE_NAME);
+  if (own && looksLiveJwt(own) && await verifyViaHost(own, origin)) return true;
+  return false;
 }
 
 function isDocumentRequest(request) {
@@ -141,8 +154,7 @@ export default async (request, context) => {
 
   if (isAuthorizedRefresh(request, url, Deno.env.get('DA_REFRESH_KEY'))) return context.next();
 
-  const token = readCookie(request.headers.get('cookie'), COOKIE_NAME);
-  if (await isAuthenticated(token, url.origin)) return context.next();
+  if (await isAuthenticated(request, url.origin)) return context.next();
 
   if (isDocumentRequest(request)) {
     return context.rewrite(new URL(LOGIN_FILE, url.origin));
