@@ -30,5 +30,34 @@
         } catch (e) {}
       })();
     </script>
+<script>
+/* Direct Agents usage tracker — one visit per session, fire-and-forget beacon (cannot affect the page). */
+(function(){
+  try{
+    var DASH='origami-seo-report';
+    var FLAG='da_v_'+DASH;
+    if(sessionStorage.getItem(FLAG))return;
+    function b64u(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';try{return decodeURIComponent(escape(atob(s)));}catch(e){try{return atob(s);}catch(e2){return '';}}}
+    function readEmail(){
+      var m=document.cookie.match(/(?:^|;\s*)nf_jwt=([^;]+)/);if(!m)return '';
+      var p=m[1].split('.');if(p.length<3)return '';
+      try{var o=JSON.parse(b64u(p[1]));return String(o.email||'').toLowerCase();}catch(e){return '';}
+    }
+    function go(){
+      if(sessionStorage.getItem(FLAG))return;
+      var e=readEmail();if(!e)return;
+      sessionStorage.setItem(FLAG,'1');
+      var payload=JSON.stringify({dashboard:DASH,email:e});
+      try{
+        var sent=false;
+        if(navigator.sendBeacon){sent=navigator.sendBeacon('/.netlify/functions/log-visit', new Blob([payload],{type:'application/json'}));}
+        if(!sent){fetch('/.netlify/functions/log-visit',{method:'POST',headers:{'content-type':'application/json'},body:payload,keepalive:true});}
+      }catch(x){}
+    }
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();
+    setTimeout(go,1500);
+  }catch(e){}
+})();
+</script>
   </body>
 </html>
