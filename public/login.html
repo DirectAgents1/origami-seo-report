@@ -94,7 +94,6 @@
     <div id="sec-invite" class="section">
       <form id="form-invite">
         <p class="hint">You've been invited. Set a password to activate your account.</p>
-        <input type="text" id="invite-name" placeholder="Full name (optional)">
         <input type="password" id="invite-pw" placeholder="Password (min 8 chars)" required minlength="8">
         <button type="submit" class="btn" id="btn-invite">Activate Account</button>
       </form>
@@ -211,7 +210,7 @@ document.getElementById('form-forgot').onsubmit = async e => {
 document.getElementById('form-invite').onsubmit = async e => {
   e.preventDefault(); clearErr(); busy('btn-invite', 'Activating…');
   try {
-    const user = await auth.acceptInvite(window._inviteToken, document.getElementById('invite-pw').value, { data: { full_name: document.getElementById('invite-name').value } });
+    const user = await auth.acceptInvite(window._inviteToken, document.getElementById('invite-pw').value, true);
     setSharedCookie(user.token); window.location.replace('/');
   } catch (err) { showErr(err.message || 'Could not accept invitation.'); unbusy('btn-invite', 'Activate Account'); }
 };
